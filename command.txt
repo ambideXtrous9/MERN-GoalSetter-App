@@ -1,0 +1,32 @@
+npm i express mongoose dotenv
+npm i -D nodemon
+
+
+-------------------------------------------------
+
+edit this in package.json
+
+"scripts": 
+{
+    "start": "node backend/server.js",
+    "server": "nodemon backend/server.js"
+}
+
+npm run server [^c to stop]
+
+----------------------------------------------------
+
+git init
+git add .
+git commit -m 'Initial Commit'
+
+
+---------------------------------------------------
+
+router.put('/:id', (req,res) => {
+    res.status(200).json({
+        message : `Update Goals ${req.params.id}`
+    })
+})
+
+module.exports = router  // to be imported in main file
