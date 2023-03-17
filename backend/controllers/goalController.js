@@ -1,5 +1,7 @@
 const asyncHandler = require('express-async-handler')
 
+
+const Goal = require('../model/goalModel')
 // @desc Get Goals
 // @route GET /api/goals
 // @access Private
@@ -12,10 +14,21 @@ const asyncHandler = require('express-async-handler')
 // and add it at top 
 // and wrap entire async function with asyncHandler ==> now we will work with database
 
+// install mongodb compass .then go to  mongodb site, atlas login and create DB, add username & password
+// and add ip and create the cluster.
+
+
+
 const getGoals = asyncHandler(async (req,res) => {
-    res.status(200).json({
-        message : 'Get Goals'
-    })
+    
+    const goals = await Goal.find()
+    
+    
+    
+    res.status(200).json(
+        //{message : 'Get Goals'}
+        goals
+    )
 })
 
 // @desc Set Goal
@@ -29,10 +42,14 @@ const setGoals = asyncHandler( async (req,res) => {
         throw new Error('Please add a text field') // gives html error -> to get 
     }                                              // only error need to add errormiddleWare.js     
     
-
-    res.status(200).json({
-        message : 'Set Goals'
+    const goal = await Goal.create({
+        text : req.body.text,
     })
+
+    res.status(200).json(
+        goal
+        //{message : 'Set Goals'}
+    )
 })
 
 // @desc Get Goals
@@ -40,9 +57,24 @@ const setGoals = asyncHandler( async (req,res) => {
 // @access Private
 
 const updateGoal = asyncHandler( async (req,res) => {
-    res.status(200).json({
-        message : `Update Goals ${req.params.id}`
-    })
+
+    const goal = await Goal.findById(req.params.id)
+
+    if(!goal)
+    {
+        res.status(400)
+        throw new Error('Goal Not Found')
+    }
+
+    const updateGoal = await Goal.findByIdAndUpdate(req.params.id,
+        req.body,{
+            new : true
+        })
+
+    res.status(200).json(
+        updateGoal
+        //{message : `Update Goals ${req.params.id}`}
+    )
 })
 
 // @desc Get Goals
@@ -50,9 +82,21 @@ const updateGoal = asyncHandler( async (req,res) => {
 // @access Private
 
 const deleteGoal = asyncHandler( async (req,res) => {
-    res.status(200).json({
-        message : `Delete Goals ${req.params.id}`
-    })
+
+    const goal = await Goal.findById(req.params.id)
+
+    if(!goal)
+    {
+        res.status(400)
+        throw new Error('Goal Not Found')
+    }
+
+    await goal.remove()
+
+    res.status(200).json(
+        {id : req.params.id}
+        //{message : `Delete Goals ${req.params.id}`}
+        )
 })
 
 module.exports = {
