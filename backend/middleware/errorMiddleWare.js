@@ -1,3 +1,5 @@
+// custom error handler
+
 const errorHandler = (err,req,res,next) => { // overiding default error handler
     const statusCode = res.statusCode ? res.statusCode : 500
 

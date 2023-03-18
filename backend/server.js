@@ -22,8 +22,11 @@ app.use(express.urlencoded({extended : false}))
 // operations in getController and import those here
 
 const goalRoutes = require('./routes/goalRoutes')
-
 app.use('/api/goals', goalRoutes)
+
+const userRoutes = require('./routes/userRoutes')
+app.use('/api/users', userRoutes)
+
 
 app.use(errorHandler) // override default error handler
 
