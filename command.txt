@@ -30,3 +30,100 @@ router.put('/:id', (req,res) => {
 })
 
 module.exports = router  // to be imported in main file
+
+// after backend
+
+-------------------------Frontend--------------------------------------
+
+npx create-react-app@latest frontend --template redux
+
+-> 'frontend' folder will be used (inside) 
+-> install redux toolkit
+-> add react redux package
+
+1. "scripts": {"client" : "npm start --prefix frontend"} add this in backend 'package.json'
+2. npm run client -> run the front end in local-server
+
+3. then delete App.css and logo.svg from 'frontend/src/'
+
+4. edit App.js and keep only
+        function App() {
+        return (
+            <div>
+            <h1>My App</h1>
+            
+            </div>
+        );
+        }
+
+        export default App;
+
+
+5. in index.js
+
+// whenever we create redux resource or state resource like(users or goals)
+// in the app folder 'store.js' we just need to add our reducer what is called
+// a slice and add it to our store.
+
+6. then go to app/store.js
+
+    import { configureStore } from '@reduxjs/toolkit';
+
+
+    // will add user reducer and goal reducer
+    export const store = configureStore({
+    reducer: {
+        
+    },
+    });
+
+7. delete everything inside 'features' folder
+
+8. now in index.css delete everything and copy from its github and paste it
+
+9. 3 pages we need
+
+// we'll going to have 3 pages - 1.dashboard 2.login 3.register
+// for that we create a folder inside src - 'src/pages' and and create
+// 3 .jsx files  
+// add vs code extension ES7+ React/Redux
+// type rfce -> it will add the function snippet reactFunctionalExportComponent
+// do the same for Login and Register
+
+10. now open new terminal and do 'cd frontend' and 
+    install 'npm i react-router-dom' inside frontend folder
+
+11. Now go to App.js file and import
+
+    import {BrowserRouter as Router, Routes, Route} from 'react-router-dom'
+
+    <Routes>
+        <Route path='/' element={<Dashboard/>} />
+        <Route path='/register' element={<Register/>} />
+        <Route path='/login' element={<Login/>} />
+    </Routes>
+
+12. Now create component folder and create Header.jsx and call rfce
+
+13. now inside frontend install 'npm i react-icons'
+
+14. the in Header.jsx
+    import {FaSignInAlt, FaSignOutAlt, FaUser} from 'react-icons/fa'
+    import {Link} from 'react-router-dom'
+
+15. in App.js
+    <Router>
+      <div className='container'>
+        <Header/>
+        <Routes>
+          <Route path='/' element={<Dashboard/>} />
+          <Route path='/register' element={<Register/>} />
+          <Route path='/login' element={<Login/>} />
+        </Routes>
+      </div>
+    </Router>
+
+
+
+
+

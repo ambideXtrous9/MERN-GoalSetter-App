@@ -12,6 +12,11 @@ const {protect} = require('../middleware/authMiddleware')
 
 // to protect every route just add 'protect' before it -> get(protect,getGoals)
 
+// We pass the authMiddleware function (prtotect here) as a second argument to the app.get() 
+// method before the route handler function. This ensures that the middleware 
+// function is called before the route handler and that the req.user object is available in the route handler.
+
+
 router.route('/').get(protect,getGoals).post(protect,setGoals)
 
 // router.put('/:id', updateGoal)

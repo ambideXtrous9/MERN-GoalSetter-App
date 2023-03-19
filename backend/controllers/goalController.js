@@ -62,6 +62,7 @@ const setGoals = asyncHandler( async (req,res) => {
 
 const updateGoal = asyncHandler( async (req,res) => {
 
+    // find goal by user input email and id
     const goal = await Goal.findById(req.params.id)
 
     
@@ -73,6 +74,7 @@ const updateGoal = asyncHandler( async (req,res) => {
 
     // make sure goal is associated to particular user only
     // and one user can not delete or update other user's entry or data 
+    // getting user from header auth token
     const user = await User.findById(req.user.id)
 
     if(!user)

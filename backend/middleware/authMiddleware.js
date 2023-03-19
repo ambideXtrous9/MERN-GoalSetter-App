@@ -9,12 +9,17 @@ const protect = asyncHandler(async(req,res,next) => { // ,next as middleware fnc
 
     if(req.headers.authorization && req.headers.authorization.startsWith('Bearer'))
     {
-        try { // token like -> Bearer afkahsfhioahfiosafdi 
+        try { 
+            // token like -> Bearer afkahsfhioahfiosafdi 
             token = req.headers.authorization.split(' ')[1] // gives only token
 
             // verify token
+            //The client must send a JWT token in the Authorization header of the HTTP request. 
+            //We extract the token from the header and verify it using the jwt.verify method.
             const decoded = jwt.verify(token,process.env.JWT_SECRET)
 
+            // If the verification is successful, we add the decoded token to the req.user object 
+            // and call the next() function to continue processing the request.
             // get user from the token -> payload token contains
             // the id -> function generateToken
             req.user = await User.findById(decoded.id).select('-password') // ignore the password hash
