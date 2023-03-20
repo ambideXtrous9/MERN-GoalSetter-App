@@ -44,11 +44,26 @@ export const register = createAsyncThunk('auth/register', async(user,thunkAPI) =
             error.response.data.message) || error.message || error.toString()
         
             return thunkAPI.rejectWithValue(message) // error message as payload
-
-        
     }
 
-}) 
+})
+
+// Login will be similar to Register, so copy above chunk and modify
+// Login User
+export const login = createAsyncThunk('auth/login', async(user,thunkAPI) => {
+    try { // make a request
+        // import auth service from features/auth/authService.js
+        return await authService.login(user)
+        
+    } catch (error) {
+
+        const message = (error.response.data && error.response.data && 
+            error.response.data.message) || error.message || error.toString()
+        
+            return thunkAPI.rejectWithValue(message) // error message as payload
+    }
+
+})
 
 
 export const logout = createAsyncThunk('auth/logout',
@@ -95,9 +110,32 @@ export const authSlice = createSlice({
             state.user = null // as reg unsuccessful so user will have no info
 
         })
+        
+        .addCase(login.pending, (state) => { // this fnc handles if register is pending,
+            state.isLoading = true // fetching the data so pending
+        })
+        .addCase(login.fulfilled, (state,action) => { // when fulfilled we get data back, 
+                                                    // get user token back, so also have an
+                                                    // action passed in the fnc
+            state.isLoading = false // reg is done so success
+            state.isSuccess = true
+            state.user = action.payload
+        })
+        .addCase(login.rejected, (state,action) => { //handles if anything goes wrong
+            state.isLoading = false
+            state.isError = true // as reg is unsuccessful
+            state.message = action.payload // this will come from thunkAPI.rejectWithValue(message)
+            state.user = null // as reg unsuccessful so user will have no info
+
+        })
+        // Now we have to hookup the Login form , just like register form
+        // open Login.jsx and copy paste some part from Register.jsx
+        // logout addCase
         .addCase(logout.fulfilled, (state) => {
             state.user = null
-        })     
+        })
+        
+             
 
     },
 })

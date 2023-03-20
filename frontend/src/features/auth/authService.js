@@ -22,6 +22,19 @@ const register =  async(userData) => {
     return response.data
 }
 
+
+//Login user
+// user gets passed in the function
+const login =  async(userData) => {
+    const response = await axios.post(API_URL + 'login', userData) // 2nd arg sends the user data
+    // when we use axios, it puts the data inside an object called 'data'
+    if(response.data){
+        localStorage.setItem('user', JSON.stringify(response.data)) // localStorage takes string only
+    }
+    
+    return response.data
+}
+
 // Logout User and add logout button on Header.jsx
 // import logout and reset there
 const logout = () => {
@@ -29,6 +42,6 @@ const logout = () => {
 }
 
 // export this
-const authService = {register,}
+const authService = {register,logout,login}
 
 export default authService
