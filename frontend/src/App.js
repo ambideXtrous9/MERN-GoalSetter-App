@@ -10,6 +10,10 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Login';
 import Register from './pages/Register';
 
+// for toast to work
+import {ToastContainer} from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 // will add 3 pages routes here 
 // use those .jsx here so import those first 
 
@@ -27,6 +31,8 @@ function App() {
         </Routes>
       </div>
     </Router>
+    {/* put toast after router */}
+    <ToastContainer />
     </>
   );
 }

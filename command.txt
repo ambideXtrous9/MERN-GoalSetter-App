@@ -123,6 +123,18 @@ npx create-react-app@latest frontend --template redux
       </div>
     </Router>
 
+16. frontend for Reg and Login are done.
+
+17. Now we want backend and frontend should run concurrently. So,
+    a. 'npm i -D concurrently' in root ~/MERN$
+    b. go to package.json and add after "client"
+        "dev" : "concurrently \"npm run server\" \"npm run client\""
+    c. npm run dev
+
+18. Now we will add redux and start in - /frontend/src/features
+    a. create a folder -> auth - that will contain auth part of our global state
+    b. create authSlice.js -> will contain reducers and initial states related to auth
+    
 
 
 
