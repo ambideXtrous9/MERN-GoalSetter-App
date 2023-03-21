@@ -162,6 +162,7 @@ Now we try to implement Goals:
 3. Dashboard will have its own components : 
     so go to components and create GoalForm.jsx and do rfce
 
-
+4. change the name of the App -> go to frontend/public/index.html 
+    and change the name
 
 

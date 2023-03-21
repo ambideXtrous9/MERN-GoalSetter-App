@@ -48,6 +48,25 @@ export const getGoals = createAsyncThunk('goals/getAll', async (_ , thunkAPI) =>
     }
 })
 
+export const deleteGoal = createAsyncThunk('goals/delete',
+async(id,thunkAPI) => { // delete goal need goal id for deleteion
+    try {
+        // reg and login are protected, so we no need to send token again
+        // thunkAPI has a getState method to get anything we want in any part of the
+        // state including auth, so we'll use that
+        const token = thunkAPI.getState().auth.user.token
+        return await goalService.deleteGoal(id,token)
+        // now go to goalService now and make request to delete
+        
+    } catch (error) {
+        const message = (error.response.data && error.response.data && 
+            error.response.data.message) || error.message || error.toString()
+        
+            return thunkAPI.rejectWithValue(message) // error message as payload        
+    }
+})
+
+
 // create goalSlice by using createSlice
 export const goalSlice = createSlice({
     name : 'goal',
@@ -98,6 +117,26 @@ export const goalSlice = createSlice({
             })
 
             // Now add the code for it in Dashboard.jsx
+
+            // now addCase for delete
+            .addCase(deleteGoal.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(deleteGoal.fulfilled, (state,action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                // in the backend we retun id when deleteing goal,
+                // if we don't do this after click delete, wont go rightway
+                // until we reload
+                state.goals = state.goals.filter((goal) => goal._id !==
+                action.payload.id) // action.payload.id goal will be deleted (got from server)
+                // i.e showing other goals that does not have this ID
+            })
+            .addCase(deleteGoal.rejected, (state,action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload // error message
+            })
 
     }
 })

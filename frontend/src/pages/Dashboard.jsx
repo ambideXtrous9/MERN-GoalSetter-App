@@ -14,8 +14,10 @@ import {useSelector,useDispatch} from 'react-redux'
 import {useNavigate} from 'react-router-dom'
 import GoalForm from '../components/GoalForm' // put it right below the section
 import Spinner from '../components/Spinner'
-import { getGoals, reset } from '../features/goals/goalSlice'
+import { getGoals } from '../features/goals/goalSlice'
 import GoalItem from '../components/GoalItem'
+
+import { reset } from '../features/auth/authSlice'
 
 
 function Dashboard() {
@@ -38,15 +40,18 @@ function Dashboard() {
     if(!user){
       navigate('/login')
     }
-
+    
     // dispatch getGoals here
     dispatch(getGoals())
+    
 
+    
     // reset the state on unmount , means leave dashboard
     // if we want to do something when component unmounts,
     // then just return from useEffect
 
-    return () => {
+    // *** this reset() must be from authSlice not from goalSlice ***
+    return () => {    
       dispatch(reset())
     }
 
@@ -75,7 +80,7 @@ function Dashboard() {
               <GoalItem key={goal._id} goal = {goal}/>
             ))}
           </div>
-        ) : (<h3>You have not set any Goals</h3>)}
+        ) : (<h3>You have not set any Goals</h3>)} 
       </section>
     </>
   )
