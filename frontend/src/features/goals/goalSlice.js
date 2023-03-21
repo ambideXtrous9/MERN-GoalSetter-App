@@ -32,6 +32,22 @@ async(goalData,thunkAPI) => {
     }
 })
 
+// Get user goals
+export const getGoals = createAsyncThunk('goals/getAll', async (_ , thunkAPI) => { // need no 1st argument
+    try {
+
+        // get the token same as above
+        const token = thunkAPI.getState().auth.user.token
+        return await goalService.getGoals(token) // create this getGoals in goalService
+        
+    } catch (error) {
+        const message = (error.response.data && error.response.data && 
+            error.response.data.message) || error.message || error.toString()
+        
+        return thunkAPI.rejectWithValue(message) // error message as payload        
+    }
+})
+
 // create goalSlice by using createSlice
 export const goalSlice = createSlice({
     name : 'goal',
@@ -58,6 +74,31 @@ export const goalSlice = createSlice({
             })
             // for now we can see our uploaded goals in DB
             // later we design our frontend to show those goals
+
+            // now if we refresh goals becomes = [], as we have not stored it in
+            // any local storage, so it will not persist in frontend
+
+            // So, we will create another function to get goals
+            // and runs when the page loads : go to goalSlice
+            // create getGoals() under goalSlice.js
+
+            // now handle extrareducers of getGoals
+            .addCase(getGoals.pending, (state) => {
+                state.isLoading = true
+            })
+            .addCase(getGoals.fulfilled, (state,action) => {
+                state.isLoading = false
+                state.isSuccess = true
+                state.goals = action.payload // payload = all goals created
+            })
+            .addCase(getGoals.rejected, (state,action) => {
+                state.isLoading = false
+                state.isError = true
+                state.message = action.payload // error message
+            })
+
+            // Now add the code for it in Dashboard.jsx
+
     }
 })
 
