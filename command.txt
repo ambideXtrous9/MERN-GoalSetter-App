@@ -135,6 +135,32 @@ npx create-react-app@latest frontend --template redux
     a. create a folder -> auth - that will contain auth part of our global state
     b. create authSlice.js -> will contain reducers and initial states related to auth
     
+19. When user == null , we should not have access to Dashboard, So, go to 
+    frontend/package/Dashboard.jsx and modify
+
+--------------------------------------------------------------------------------------------
+
+Now we try to implement Goals:
+
+1. We have to add our goals to global state. in features create folder 'goals'
+    and create - a. goalSlice.js, b. goalService.js
+
+    import goalReducer from '../features/goals/goalSlice'
+
+    // will add user reducer and goal reducer
+    export const store = configureStore({
+        reducer: {
+            // open redux dev tools in browser, then go to state, 
+            // this auth will appear
+            auth : authReducer,
+            goals : goalReducer 
+        },
+    });
+
+2. Now go to Dashboard.jsx and modify the page
+
+3. Dashboard will have its own components : 
+    so go to components and create GoalForm.jsx and do rfce
 
 
 

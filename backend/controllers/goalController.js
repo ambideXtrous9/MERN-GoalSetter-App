@@ -75,16 +75,21 @@ const updateGoal = asyncHandler( async (req,res) => {
     // make sure goal is associated to particular user only
     // and one user can not delete or update other user's entry or data 
     // getting user from header auth token
-    const user = await User.findById(req.user.id)
 
-    if(!user)
+    // we already have got our user, from the in authMiddleware -> req.user
+    // so no need it fetch it again, instead we can directly use req.user
+    // const {id,name,email} = await User.findById(req.user.id) // from token authMiddleware.js
+
+    // const user = await User.findById(req.user.id)
+
+    if(!req.user)
     {
         res.status(401)
         throw new Error('User Not Found !!')
     }
 
     // make sure login user matches the goal user
-    if(goal.user.toString() !== user.id)
+    if(goal.user.toString() !== req.user.id)
     {
         res.status(401)
         throw new Error('User Not Authorized')
@@ -115,16 +120,21 @@ const deleteGoal = asyncHandler( async (req,res) => {
         throw new Error('Goal Not Found')
     }
 
-    const user = await User.findById(req.user.id)
+    // we already have got our user, from the in authMiddleware -> req.user
+    // so no need it fetch it again, instead we can directly use req.user
+    // const {id,name,email} = await User.findById(req.user.id) // from token authMiddleware.js
 
-    if(!user)
+
+    //const user = await User.findById(req.user.id)
+
+    if(!req.user)
     {
         res.status(401)
         throw new Error('User Not Found !!')
     }
 
     // make sure login user matches the goal user
-    if(goal.user.toString() !== user.id)
+    if(goal.user.toString() !== req.user.id)
     {
         res.status(401)
         throw new Error('User Not Authorized')

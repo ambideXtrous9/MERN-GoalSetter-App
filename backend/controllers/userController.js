@@ -101,13 +101,20 @@ const loginUser = asyncHandler(async (req,res) => {
 // authMiddleware will be added in middleware folder
 const getUser = asyncHandler(async (req,res) => {
     
-    const {id,name,email} = await User.findById(req.user.id) // from token authMiddleware.js
+    // we already have got our user, from the in authMiddleware -> req.user
+    // so no need it fetch it again, instead we can directly use req.user
+    // const {id,name,email} = await User.findById(req.user.id) // from token authMiddleware.js
 
-    res.status(200).json({
-        id : id,
-        name,
-        email
-    })
+    // res.status(200).json({
+    //     id : id,
+    //     name,
+    //     email
+    // })
+
+    // change same in the goalController.js as well
+
+    res.status(200).json(req.user)
+
 })
 
 
