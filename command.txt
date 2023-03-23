@@ -179,6 +179,10 @@ MERN/frontend/ - run - npm run build
 
 Now change env NODE_ENV = production and run - npm start (if any error try with different PORT)
 
+----------------------------------------------------------------------
+
+clone this and run - npm start
+
 
 
 
