@@ -1,5 +1,5 @@
 const mongoose = require('mongoose')
-
+mongoose.set('strictQuery', false);
 
 // add the app uri copied from the mongodb site in env file as MONGO_URI
 

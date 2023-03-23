@@ -5,6 +5,8 @@ const {errorHandler} = require('./middleware/errorMiddleWare') // call it after 
 const connectDB = require('./config/db')
 const port = process.env.PORT || 5000
 
+// bring path module
+const path = require('path')
 
 connectDB()
 
@@ -26,6 +28,20 @@ app.use('/api/goals', goalRoutes)
 
 const userRoutes = require('./routes/userRoutes')
 app.use('/api/users', userRoutes)
+
+// Serve frontend
+
+if(process.env.NODE_ENV === 'production'){
+    app.use(express.static( // here we put path of static folder - frontend/build
+        path.join(__dirname, '../frontend/build'))) // __dirname = current directory
+    
+    // '*' means any route apart from above routes
+    app.get('*', (req,res) => res.sendFile(path.resolve(__dirname,'../','frontend','build','index.html')))
+
+
+}else{
+    app.get('/', (req, res) => res.send('Please, set to production'));
+}
 
 
 app.use(errorHandler) // override default error handler

@@ -165,4 +165,23 @@ Now we try to implement Goals:
 4. change the name of the App -> go to frontend/public/index.html 
     and change the name
 
+------------------------------Deployment------------------------------------
+Stop Serever from running.
+
+we are using - frontend dev server, that is not for production, go to server.js
+
+npm run build - creates a build folder with all our static assets
+index.html is entrypoint of our frontend. add this to server.js
+
+// under the routes of server.js
+
+MERN/frontend/ - run - npm run build
+
+Now change env NODE_ENV = production and run - npm start (if any error try with different PORT)
+
+
+
+
+
+
 

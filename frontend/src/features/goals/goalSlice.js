@@ -137,7 +137,6 @@ export const goalSlice = createSlice({
                 state.isError = true
                 state.message = action.payload // error message
             })
-
     }
 })
 
