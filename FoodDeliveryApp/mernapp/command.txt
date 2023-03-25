@@ -1,6 +1,6 @@
 1. npx create-react-app mernapp
 
---------------------------------------------------
+-------------------------------------------------------------------------
 
 1. go inside mernapp - 'npm start' in terminal 
 2. delete logo.svg file and remove code-snippet in src/App.js inside return
@@ -52,4 +52,8 @@ make application in dark mode
     (it may not work same as shown initially, as we are using dark mode)
     now change all 'class' -> 'className' (ctrl+shift+L)
                     '#' -> '/' (ctrl+shift+L)
+
+    Now page is getting reloaded every time I click in options in Navbar(multipage app)
+    So, to avoid this -> we use react routers 
+
 
