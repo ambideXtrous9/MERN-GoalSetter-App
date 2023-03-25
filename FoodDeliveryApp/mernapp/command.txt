@@ -50,5 +50,6 @@ make application in dark mode
 8. go to - https://getbootstrap.com/docs/5.0/components/navbar/
     and copy the suitable navbar code and paste it in Navbar.js inside <div></div>
     (it may not work same as shown initially, as we are using dark mode)
-    now change all 'class' -> 'className'
+    now change all 'class' -> 'className' (ctrl+shift+L)
+                    '#' -> '/' (ctrl+shift+L)
 
